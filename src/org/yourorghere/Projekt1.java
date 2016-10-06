@@ -48,6 +48,7 @@ public class Projekt1 implements GLEventListener {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         animator.start();
+     kolo(2.0,1.0,-5.0);
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -81,7 +82,28 @@ public class Projekt1 implements GLEventListener {
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
+public void kolo(GLAutoDrawable drawable, float a1, float a2, float b1,float b2, float c1, float c2){
+    GL gl = drawable.getGL();
 
+        // Clear the drawing area
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        // Reset the current matrix to the "identity"
+        gl.glLoadIdentity();
+        gl.glTranslatef(0.0f,0.0f,-6.0f);
+       gl.glBegin(GL.GL_TRIANGLES);
+            gl.glColor3f(a1, a2 ,0.0f);
+            gl.glVertex3f(a1, a2, -6.0f);
+            gl.glVertex3f(b1, b2, -6.0f);
+            gl.glVertex3f( c1 ,c2, -6.0f);
+            
+
+       gl.glEnd();
+
+       
+        // Flush all drawing operations to the graphics card
+        gl.glFlush();
+       
+}
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
 
@@ -108,21 +130,23 @@ public class Projekt1 implements GLEventListener {
            
 
        gl.glEnd();
-       
+          
              float x,y,kat;
               gl.glColor3f(1.0f,1.0f,1.0f);
              gl.glBegin(GL.GL_TRIANGLE_FAN);
-             gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
+             gl.glVertex3f(-4.0f,0.0f,-6.0f); //œrodek
              for(kat = 0.0f; kat < (2.0f*Math.PI);
              kat+=(Math.PI/32.0f))
              {
              x = 3f*(float)Math.sin(kat);
              y = 3f*(float)Math.cos(kat);
-             gl.glVertex3f(x, y, -6.0f); //kolejne punkty
+             gl.glVertex3f(-4+x, y, -6.0f); //kolejne punkty
              }
              gl.glEnd();
+       
         // Flush all drawing operations to the graphics card
         gl.glFlush();
+       
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {

@@ -159,37 +159,72 @@ public class Projekt1 implements GLEventListener {
 //gl.glVertex3f(1.0f,1.0f,-1.0f);
 //gl.glVertex3f(-1.0f,1.0f,-1.0f);
 //gl.glEnd();
- gl.glBegin(GL.GL_QUADS);
- gl.glColor3f(0.0f,0.5f,1.0f);
-gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-gl.glVertex3f(1.0f,-1.0f,-1.0f);
-gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glEnd();
- gl.glBegin(GL.GL_TRIANGLES);
- //sciana prawa
- gl.glColor3f(1.0f,-1.0f,1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glVertex3f(1.0f,-1.0f,-1.0f);
-//sciana lewa
- gl.glColor3f(-1.0f,0.0f,1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-gl.glVertex3f(-1.0f,-1.0f,1.0f);
-//sciana tylnia
-gl.glColor3f(1.0f,0.0f,-1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(1.0f,-1.0f,-1.0f);
-gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-//sciana przednia
-gl.glColor3f(1.0f,1.0f,1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glVertex3f(1.0f,-1.0f,1.0f);
+ 
+//ostroslup
+ 
+// gl.glBegin(GL.GL_QUADS);
+// gl.glColor3f(0.0f,0.5f,1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glEnd();
+// gl.glBegin(GL.GL_TRIANGLES);
+// //sciana prawa
+// gl.glColor3f(1.0f,-1.0f,1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+////sciana lewa
+// gl.glColor3f(-1.0f,0.0f,1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+////sciana tylnia
+//gl.glColor3f(1.0f,0.0f,-1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+////sciana przednia
+//gl.glColor3f(1.0f,1.0f,1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glVertex3f(1.0f,-1.0f,1.0f);
 
+ //walec
+ float x,y,kat;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f,1.0f, .0f); //œrodek
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat+=(Math.PI/32.0f))
+{
+x = 1.5f*(float)Math.sin(kat);
+y = 1.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, 1.0f,y); //kolejne punkty
+}
 gl.glEnd();
-        // Flush all drawing operations to the graphics card
+
+float x1,y1,kat1;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f,-1.0f, 0.0f); //œrodek
+for(kat1 = (float) (2.0f*Math.PI); kat1 > 0.0f; kat1-=(Math.PI/32.0f))
+{
+x1 = 1.5f*(float)Math.sin(kat1);
+y1 = 1.5f*(float)Math.cos(kat1);
+gl.glVertex3f(x1,-1.0f,y1); //kolejne punkty
+}
+gl.glEnd();
+
+float x2,y2,kat2;
+gl.glBegin(GL.GL_QUAD_STRIP);
+gl.glColor3f(1.0f,0.0f,1.0f);
+for(kat2 = 0.0f; kat2 < (2.0f*Math.PI); kat2+=(Math.PI/32.0f))
+{
+x2 = 1.5f*(float)Math.sin(kat2);
+y2 = 1.5f*(float)Math.cos(kat2);
+ gl.glVertex3f(x2,1.0f,y2);
+ gl.glVertex3f(x2,-1.0f,y2);//kolejne punkty
+}
+ gl.glEnd();       // Flush all drawing operations to the graphics card
         gl.glFlush();
        
     }

@@ -24,6 +24,11 @@ public class Projekt1 implements GLEventListener {
 //statyczne pola okreœlaj¹ce rotacjê wokó³ osi X i Y
  private static float xrot = 0.0f, yrot = 0.0f;
 
+   public  static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczaj?ce
+   public     static float diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
+   public      static float specular[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
+   public       static float lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
+ 
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
@@ -61,6 +66,32 @@ public class Projekt1 implements GLEventListener {
  yrot += 1.0f;
  if(e.getKeyCode() == KeyEvent.VK_LEFT)
  yrot -=1.0f;
+ 
+ 
+ if(e.getKeyChar()=='q'){
+     ambientLight= new float[]{ambientLight[0]-0.1f, ambientLight[0]-0.1f,ambientLight[0]-0.1f,ambientLight[0]-0.1f};
+     }
+  if(e.getKeyChar()=='w'){
+     ambientLight= new float[]{ambientLight[0]+0.1f, ambientLight[0]+0.1f,ambientLight[0]+0.1f,ambientLight[0]+0.1f};
+     }
+  if(e.getKeyChar()=='a'){
+     diffuseLight= new float[]{diffuseLight[0]-0.1f, diffuseLight[0]-0.1f,diffuseLight[0]-0.1f,diffuseLight[0]-0.1f};
+     }
+  if(e.getKeyChar()=='s'){
+     diffuseLight= new float[]{diffuseLight[0]+0.1f, diffuseLight[0]+0.1f,diffuseLight[0]+0.1f,diffuseLight[0]+0.1f};
+     }
+  if(e.getKeyChar()=='z'){
+     specular= new float[]{specular[0]-0.1f, specular[0]-0.1f,specular[0]-0.1f,specular[0]-0.1f};
+     }
+  if(e.getKeyChar()=='x'){
+     specular= new float[]{specular[0]+0.1f, specular[0]+0.1f,specular[0]+0.1f,specular[0]+0.1f};
+     }
+  if(e.getKeyChar()=='k'){
+     lightPos= new float[]{lightPos[0]-0.1f, lightPos[0]-0.1f,lightPos[0]-0.1f,lightPos[0]-0.1f};
+     }
+  if(e.getKeyChar()=='l'){
+     lightPos= new float[]{lightPos[0]+0.1f, lightPos[0]+0.1f,lightPos[0]+0.1f,lightPos[0]+0.1f};
+     }
  }
  public void keyReleased(KeyEvent e){}
  public void keyTyped(KeyEvent e){}
@@ -84,13 +115,32 @@ public class Projekt1 implements GLEventListener {
         // Enable VSync
         gl.setSwapInterval(1);
 
-        // Setup the drawing area and shading mode
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
-        //wy³¹czenie wewnêtrzych stron prymitywów
- gl.glEnable(GL.GL_CULL_FACE);
+    //warto?ci sk?adowe o?wietlenia i koordynaty ?ród?a ?wiat?a
+    
+        //(czwarty parametr okre?la odleg?o?? ?ród?a:
+        //0.0f-niesko?czona; 1.0f-okre?lona przez pozosta?e parametry)
+        gl.glEnable(GL.GL_LIGHTING); //uaktywnienie o?wietlenia
+        //ustawienie parametrów ?ród?a ?wiat?a nr. 0
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat?o otaczaj?ce
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE,diffuseLight,0); //?wiat?o rozproszone
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
+        gl.glEnable(GL.GL_LIGHT0); //uaktywnienie ?ród?a ?wiat?a nr. 0
+        gl.glEnable(GL.GL_COLOR_MATERIAL); //uaktywnienie ?ledzenia kolorów
+        //kolory b?d? ustalane za pomoc? glColor
+        gl.glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE);
+        //Ustawienie jasno?ci i odblaskowo?ci obiektów
+        float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR,specref,0);
+        
+        gl.glMateriali(GL.GL_FRONT,GL.GL_SHININESS,128);
 
+        gl.glEnable(GL.GL_DEPTH_TEST);
+        // Setup the drawing area and shading mode
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
     }
+
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL gl = drawable.getGL();
@@ -119,6 +169,15 @@ public class Projekt1 implements GLEventListener {
         gl.glTranslatef(0.0f, 0.0f, -6.0f); //przesuniêcie o 6 jednostek
  gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); //rotacja wokó³ osi X
  gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); //rotacja wokó³ osi Y
+ 
+  gl.glEnable(GL.GL_LIGHTING); //uaktywnienie o?wietlenia
+        //ustawienie parametrów ?ród?a ?wiat?a nr. 0
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat?o otaczaj?ce
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE,diffuseLight,0); //?wiat?o rozproszone
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
+        gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
+        gl.glEnable(GL.GL_LIGHT0); //uaktywnienie ?ród?a ?wiat?a nr. 0
+        gl.glEnable(GL.GL_COLOR_MATERIAL); 
  
 //gl.glBegin(GL.GL_QUADS);
 ////œciana przednia
@@ -162,68 +221,68 @@ public class Projekt1 implements GLEventListener {
  
 //ostroslup
  
-// gl.glBegin(GL.GL_QUADS);
-// gl.glColor3f(0.0f,0.5f,1.0f);
-//gl.glVertex3f(-1.0f,-1.0f,1.0f);
-//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-//gl.glVertex3f(1.0f,-1.0f,-1.0f);
-//gl.glVertex3f(1.0f,-1.0f,1.0f);
-//gl.glEnd();
-// gl.glBegin(GL.GL_TRIANGLES);
+ gl.glBegin(GL.GL_QUADS);
+ gl.glColor3f(0.0f,0.5f,1.0f);
+gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glEnd();
+ gl.glBegin(GL.GL_TRIANGLES);
 // //sciana prawa
-// gl.glColor3f(1.0f,-1.0f,1.0f);
-//gl.glVertex3f(0.0f,1.0f,0.0f);
-//gl.glVertex3f(1.0f,-1.0f,1.0f);
-//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+ gl.glColor3f(1.0f,-1.0f,1.0f);
+gl.glVertex3f(0.0f,1.0f,0.0f);
+gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glVertex3f(1.0f,-1.0f,-1.0f);
 ////sciana lewa
-// gl.glColor3f(-1.0f,0.0f,1.0f);
-//gl.glVertex3f(0.0f,1.0f,0.0f);
-//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+ gl.glColor3f(-1.0f,0.0f,1.0f);
+gl.glVertex3f(0.0f,1.0f,0.0f);
+gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glVertex3f(-1.0f,-1.0f,1.0f);
 ////sciana tylnia
-//gl.glColor3f(1.0f,0.0f,-1.0f);
-//gl.glVertex3f(0.0f,1.0f,0.0f);
-//gl.glVertex3f(1.0f,-1.0f,-1.0f);
-//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glColor3f(1.0f,0.0f,-1.0f);
+gl.glVertex3f(0.0f,1.0f,0.0f);
+gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 ////sciana przednia
-//gl.glColor3f(1.0f,1.0f,1.0f);
-//gl.glVertex3f(0.0f,1.0f,0.0f);
-//gl.glVertex3f(-1.0f,-1.0f,1.0f);
-//gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glColor3f(1.0f,1.0f,1.0f);
+gl.glVertex3f(0.0f,1.0f,0.0f);
+gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glVertex3f(1.0f,-1.0f,1.0f);
 
  //walec
- float x,y,kat;
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glVertex3f(0.0f,1.0f, .0f); //œrodek
-for(kat = 0.0f; kat < (2.0f*Math.PI); kat+=(Math.PI/32.0f))
-{
-x = 1.5f*(float)Math.sin(kat);
-y = 1.5f*(float)Math.cos(kat);
-gl.glVertex3f(x, 1.0f,y); //kolejne punkty
-}
-gl.glEnd();
-
-float x1,y1,kat1;
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glVertex3f(0.0f,-1.0f, 0.0f); //œrodek
-for(kat1 = (float) (2.0f*Math.PI); kat1 > 0.0f; kat1-=(Math.PI/32.0f))
-{
-x1 = 1.5f*(float)Math.sin(kat1);
-y1 = 1.5f*(float)Math.cos(kat1);
-gl.glVertex3f(x1,-1.0f,y1); //kolejne punkty
-}
-gl.glEnd();
-
-float x2,y2,kat2;
-gl.glBegin(GL.GL_QUAD_STRIP);
-gl.glColor3f(1.0f,0.0f,1.0f);
-for(kat2 = 0.0f; kat2 < (2.0f*Math.PI); kat2+=(Math.PI/32.0f))
-{
-x2 = 1.5f*(float)Math.sin(kat2);
-y2 = 1.5f*(float)Math.cos(kat2);
- gl.glVertex3f(x2,1.0f,y2);
- gl.glVertex3f(x2,-1.0f,y2);//kolejne punkty
-}
+// float x,y,kat;
+//gl.glBegin(GL.GL_TRIANGLE_FAN);
+//gl.glVertex3f(0.0f,1.0f, .0f); //œrodek
+//for(kat = 0.0f; kat < (2.0f*Math.PI); kat+=(Math.PI/32.0f))
+//{
+//x = 1.5f*(float)Math.sin(kat);
+//y = 1.5f*(float)Math.cos(kat);
+//gl.glVertex3f(x, 1.0f,y); //kolejne punkty
+//}
+//gl.glEnd();
+//
+//float x1,y1,kat1;
+//gl.glBegin(GL.GL_TRIANGLE_FAN);
+//gl.glVertex3f(0.0f,-1.0f, 0.0f); //œrodek
+//for(kat1 = (float) (2.0f*Math.PI); kat1 > 0.0f; kat1-=(Math.PI/32.0f))
+//{
+//x1 = 1.5f*(float)Math.sin(kat1);
+//y1 = 1.5f*(float)Math.cos(kat1);
+//gl.glVertex3f(x1,-1.0f,y1); //kolejne punkty
+//}
+//gl.glEnd();
+//
+//float x2,y2,kat2;
+//gl.glBegin(GL.GL_QUAD_STRIP);
+//gl.glColor3f(1.0f,0.0f,1.0f);
+//for(kat2 = 0.0f; kat2 < (2.0f*Math.PI); kat2+=(Math.PI/32.0f))
+//{
+//x2 = 1.5f*(float)Math.sin(kat2);
+//y2 = 1.5f*(float)Math.cos(kat2);
+// gl.glVertex3f(x2,1.0f,y2);
+// gl.glVertex3f(x2,-1.0f,y2);//kolejne punkty
+//}
  gl.glEnd();       // Flush all drawing operations to the graphics card
         gl.glFlush();
        

@@ -29,6 +29,10 @@ public class Projekt1 implements GLEventListener {
    public      static float specular[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
    public       static float lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
  
+    public  static float ambientLight1[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczaj?ce
+   public     static float diffuseLight1[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
+   public      static float specular1[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
+   public       static float lightPos1[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
@@ -126,6 +130,12 @@ public class Projekt1 implements GLEventListener {
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
         gl.glEnable(GL.GL_LIGHT0); //uaktywnienie ?ród?a ?wiat?a nr. 0
+        
+          gl.glLightfv(GL.GL_LIGHT1,GL.GL_AMBIENT,ambientLight1,0); //swiat?o otaczaj?ce
+        gl.glLightfv(GL.GL_LIGHT1,GL.GL_DIFFUSE,diffuseLight1,0); //?wiat?o rozproszone
+        gl.glLightfv(GL.GL_LIGHT1,GL.GL_SPECULAR,specular1,0); //?wiat?o odbite
+        gl.glLightfv(GL.GL_LIGHT1,GL.GL_POSITION,lightPos1,0); //pozycja ?wiat?a
+        gl.glEnable(GL.GL_LIGHT1); //uaktywnienie ?ród?a ?wiat?a nr. 0
         gl.glEnable(GL.GL_COLOR_MATERIAL); //uaktywnienie ?ledzenia kolorów
         //kolory b?d? ustalane za pomoc? glColor
         gl.glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE);
@@ -154,9 +164,11 @@ public class Projekt1 implements GLEventListener {
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(45.0f, h, 1.0, 20.0);
+        glu.gluPerspective(120.0f, h, 1.0, 40.0);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
+        
+        
     }
 
         void drzewko(GL gl){
@@ -264,16 +276,23 @@ gl.glEnd();
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE,diffuseLight,0); //?wiat?o rozproszone
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
-        gl.glEnable(GL.GL_LIGHT0); //uaktywnienie ?ród?a ?wiat?a nr. 0
+        gl.glEnable(GL.GL_LIGHT0); 
+
+         gl.glLightfv(GL.GL_LIGHT1,GL.GL_AMBIENT,ambientLight,0); //swiat?o otaczaj?ce
+        gl.glLightfv(GL.GL_LIGHT1,GL.GL_DIFFUSE,diffuseLight,0); //?wiat?o rozproszone
+        gl.glLightfv(GL.GL_LIGHT1,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
+        gl.glLightfv(GL.GL_LIGHT1,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
+        gl.glEnable(GL.GL_LIGHT1);
+//uaktywnienie ?ród?a ?wiat?a nr. 0
         gl.glEnable(GL.GL_COLOR_MATERIAL); 
 for(int i=0; i<7; i++){
     gl.glPushMatrix();
         for(int k=0; k<7; k++){
             drzewko(gl);
-            gl.glTranslatef(0.4f,1.5f,0.0f);
+            gl.glTranslatef(1.8f,0.0f,0.0f);
         }
         gl.glPopMatrix();
-        gl.glTranslatef(1.5f,0.4f,0.0f);
+        gl.glTranslatef(0.0f,1.8f,0.0f);
         }
     }
 //gl.glBegin(GL.GL_QUADS);

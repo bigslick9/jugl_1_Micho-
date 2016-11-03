@@ -159,6 +159,94 @@ public class Projekt1 implements GLEventListener {
         gl.glLoadIdentity();
     }
 
+        void drzewko(GL gl){
+            gl.glPushMatrix();
+           gl.glColor3f(0.0f,1.0f,0.0f);
+        stozek(gl);
+        
+          gl.glScalef(1.2f, 1.2f, 1.0f);
+        gl.glTranslatef(0.0f,0.0f,1.0f);
+        stozek(gl);
+        
+          gl.glScalef(1.4f, 1.4f, 1.0f);
+         gl.glTranslatef(0.0f,0.0f,1.0f);
+        stozek(gl);
+        
+        gl.glColor3f(0.0f,0.0f,0.0f);
+          gl.glScalef(0.7f, 0.7f, 1.0f);
+         gl.glTranslatef(0.0f,0.0f,1.0f);
+        walec(gl);
+        gl.glPopMatrix();
+    }
+    
+    void walec(GL gl)
+ {
+//wywo³ujemy automatyczne normalizowanie normalnych
+//bo operacja skalowania je zniekszta³ci
+gl.glEnable(GL.GL_NORMALIZE);
+float x,y,kat;
+gl.glBegin(GL.GL_QUAD_STRIP);
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),0.0f);
+gl.glVertex3f(x, y, -1.0f);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+gl.glNormal3f(0.0f,0.0f,-1.0f);
+x=y=kat=0.0f;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, -1.0f); //srodek kola
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, y, -1.0f);
+}
+gl.glEnd();
+gl.glNormal3f(0.0f,0.0f,1.0f);
+x=y=kat=0.0f;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
+for(kat = 2.0f*(float)Math.PI; kat > 0.0f ; kat -= (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+}
+
+void stozek(GL gl)
+{
+//wywo³ujemy automatyczne normalizowanie normalnych
+gl.glEnable(GL.GL_NORMALIZE);
+float x,y,kat;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, -2.0f); //wierzcholek stozka
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = (float)Math.sin(kat);
+y = (float)Math.cos(kat);
+gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),-2.0f);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glNormal3f(0.0f,0.0f,1.0f);
+gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
+for(kat = 2.0f*(float)Math.PI; kat > 0.0f; kat -= (Math.PI/32.0f))
+{
+x = (float)Math.sin(kat);
+y = (float)Math.cos(kat);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+
+}
+    
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
 
@@ -178,10 +266,16 @@ public class Projekt1 implements GLEventListener {
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
         gl.glEnable(GL.GL_LIGHT0); //uaktywnienie ?ród?a ?wiat?a nr. 0
         gl.glEnable(GL.GL_COLOR_MATERIAL); 
-        
-        drzewko(gl);
-
-     
+for(int i=0; i<7; i++){
+    gl.glPushMatrix();
+        for(int k=0; k<7; k++){
+            drzewko(gl);
+            gl.glTranslatef(0.4f,1.5f,0.0f);
+        }
+        gl.glPopMatrix();
+        gl.glTranslatef(1.5f,0.4f,0.0f);
+        }
+    }
 //gl.glBegin(GL.GL_QUADS);
 ////œciana przednia
 //gl.glColor3f(1.0f,0.0f,0.0f);
@@ -290,94 +384,11 @@ public class Projekt1 implements GLEventListener {
       //  gl.glFlush();
        
   //drzewko      
-     
-    }
-    
-    void drzewko(GL gl){
-           gl.glColor3f(0.0f,1.0f,0.0f);
-        stozek(gl);
-        
-          gl.glScalef(1.2f, 1.2f, 1.0f);
-        gl.glTranslatef(0.0f,0.0f,1.0f);
-        stozek(gl);
-        
-          gl.glScalef(1.4f, 1.4f, 1.0f);
-         gl.glTranslatef(0.0f,0.0f,1.0f);
-        stozek(gl);
-        
-        gl.glColor3f(0.0f,0.0f,0.0f);
-          gl.glScalef(0.7f, 0.7f, 1.0f);
-         gl.glTranslatef(0.0f,0.0f,1.0f);
-        walec(gl);
-    }
-    
-    void walec(GL gl)
- {
-//wywo³ujemy automatyczne normalizowanie normalnych
-//bo operacja skalowania je zniekszta³ci
-gl.glEnable(GL.GL_NORMALIZE);
-float x,y,kat;
-gl.glBegin(GL.GL_QUAD_STRIP);
-for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
-{
-x = 0.5f*(float)Math.sin(kat);
-y = 0.5f*(float)Math.cos(kat);
-gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),0.0f);
-gl.glVertex3f(x, y, -1.0f);
-gl.glVertex3f(x, y, 0.0f);
-}
-gl.glEnd();
-gl.glNormal3f(0.0f,0.0f,-1.0f);
-x=y=kat=0.0f;
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glVertex3f(0.0f, 0.0f, -1.0f); //srodek kola
-for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
-{
-x = 0.5f*(float)Math.sin(kat);
-y = 0.5f*(float)Math.cos(kat);
-gl.glVertex3f(x, y, -1.0f);
-}
-gl.glEnd();
-gl.glNormal3f(0.0f,0.0f,1.0f);
-x=y=kat=0.0f;
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
-for(kat = 2.0f*(float)Math.PI; kat > 0.0f ; kat -= (Math.PI/32.0f))
-{
-x = 0.5f*(float)Math.sin(kat);
-y = 0.5f*(float)Math.cos(kat);
-gl.glVertex3f(x, y, 0.0f);
-}
-gl.glEnd();
-}
 
-void stozek(GL gl)
-{
-//wywo³ujemy automatyczne normalizowanie normalnych
-gl.glEnable(GL.GL_NORMALIZE);
-float x,y,kat;
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glVertex3f(0.0f, 0.0f, -2.0f); //wierzcholek stozka
-for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
-{
-x = (float)Math.sin(kat);
-y = (float)Math.cos(kat);
-gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),-2.0f);
-gl.glVertex3f(x, y, 0.0f);
-}
-gl.glEnd();
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glNormal3f(0.0f,0.0f,1.0f);
-gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
-for(kat = 2.0f*(float)Math.PI; kat > 0.0f; kat -= (Math.PI/32.0f))
-{
-x = (float)Math.sin(kat);
-y = (float)Math.cos(kat);
-gl.glVertex3f(x, y, 0.0f);
-}
-gl.glEnd();
+    
+    
+    
 
-}
     
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }

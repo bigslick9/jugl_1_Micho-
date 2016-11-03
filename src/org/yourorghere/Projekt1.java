@@ -69,28 +69,28 @@ public class Projekt1 implements GLEventListener {
  
  
  if(e.getKeyChar()=='q'){
-     ambientLight= new float[]{ambientLight[0]-0.1f, ambientLight[0]-0.1f,ambientLight[0]-0.1f,ambientLight[0]-0.1f};
+     ambientLight= new float[]{ambientLight[0]-0.1f, ambientLight[1]-0.1f,ambientLight[2]-0.1f,ambientLight[3]-0.01f};
      }
   if(e.getKeyChar()=='w'){
-     ambientLight= new float[]{ambientLight[0]+0.1f, ambientLight[0]+0.1f,ambientLight[0]+0.1f,ambientLight[0]+0.1f};
+     ambientLight= new float[]{ambientLight[0]+0.1f, ambientLight[1]+0.1f,ambientLight[2]+0.1f,ambientLight[3]+0.01f};
      }
   if(e.getKeyChar()=='a'){
-     diffuseLight= new float[]{diffuseLight[0]-0.1f, diffuseLight[0]-0.1f,diffuseLight[0]-0.1f,diffuseLight[0]-0.1f};
+     diffuseLight= new float[]{diffuseLight[0]-0.1f, diffuseLight[1]-0.1f,diffuseLight[2]-0.1f,diffuseLight[3]-0.01f};
      }
   if(e.getKeyChar()=='s'){
-     diffuseLight= new float[]{diffuseLight[0]+0.1f, diffuseLight[0]+0.1f,diffuseLight[0]+0.1f,diffuseLight[0]+0.1f};
+     diffuseLight= new float[]{diffuseLight[0]+0.1f, diffuseLight[1]+0.1f,diffuseLight[2]+0.1f,diffuseLight[3]+0.01f};
      }
   if(e.getKeyChar()=='z'){
-     specular= new float[]{specular[0]-0.1f, specular[0]-0.1f,specular[0]-0.1f,specular[0]-0.1f};
+     specular= new float[]{specular[0]-0.1f, specular[1]-0.1f,specular[2]-0.1f,specular[3]-0.01f};
      }
   if(e.getKeyChar()=='x'){
-     specular= new float[]{specular[0]+0.1f, specular[0]+0.1f,specular[0]+0.1f,specular[0]+0.1f};
+     specular= new float[]{specular[0]+0.1f, specular[1]+0.1f,specular[2]+0.1f,specular[3]+0.01f};
      }
   if(e.getKeyChar()=='k'){
-     lightPos= new float[]{lightPos[0]-0.1f, lightPos[0]-0.1f,lightPos[0]-0.1f,lightPos[0]-0.1f};
+     lightPos= new float[]{lightPos[0]-0.1f, lightPos[1]-0.1f,lightPos[2]-0.1f,lightPos[3]-0.01f};
      }
   if(e.getKeyChar()=='l'){
-     lightPos= new float[]{lightPos[0]+0.1f, lightPos[0]+0.1f,lightPos[0]+0.1f,lightPos[0]+0.1f};
+     lightPos= new float[]{lightPos[0]+0.1f, lightPos[1]+0.1f,lightPos[2]+0.1f,lightPos[3]+0.01f};
      }
  }
  public void keyReleased(KeyEvent e){}
@@ -178,7 +178,10 @@ public class Projekt1 implements GLEventListener {
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
         gl.glEnable(GL.GL_LIGHT0); //uaktywnienie ?ród?a ?wiat?a nr. 0
         gl.glEnable(GL.GL_COLOR_MATERIAL); 
- 
+        
+        drzewko(gl);
+
+     
 //gl.glBegin(GL.GL_QUADS);
 ////œciana przednia
 //gl.glColor3f(1.0f,0.0f,0.0f);
@@ -221,35 +224,35 @@ public class Projekt1 implements GLEventListener {
  
 //ostroslup
  
- gl.glBegin(GL.GL_QUADS);
- gl.glColor3f(0.0f,0.5f,1.0f);
-gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-gl.glVertex3f(1.0f,-1.0f,-1.0f);
-gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glEnd();
- gl.glBegin(GL.GL_TRIANGLES);
-// //sciana prawa
- gl.glColor3f(1.0f,-1.0f,1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glVertex3f(1.0f,-1.0f,-1.0f);
-////sciana lewa
- gl.glColor3f(-1.0f,0.0f,1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-gl.glVertex3f(-1.0f,-1.0f,1.0f);
-////sciana tylnia
-gl.glColor3f(1.0f,0.0f,-1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(1.0f,-1.0f,-1.0f);
-gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-////sciana przednia
-gl.glColor3f(1.0f,1.0f,1.0f);
-gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glVertex3f(1.0f,-1.0f,1.0f);
-
+// gl.glBegin(GL.GL_QUADS);
+// gl.glColor3f(0.0f,0.5f,1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glEnd();
+// gl.glBegin(GL.GL_TRIANGLES);
+////// //sciana prawa
+// gl.glColor3f(1.0f,-1.0f,1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+////////sciana lewa
+// gl.glColor3f(-1.0f,0.0f,1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+////////sciana tylnia
+//gl.glColor3f(1.0f,0.0f,-1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+////////sciana przednia
+//gl.glColor3f(1.0f,0.0f,1.0f);
+//gl.glVertex3f(0.0f,1.0f,0.0f);
+//gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glEnd(); 
  //walec
 // float x,y,kat;
 //gl.glBegin(GL.GL_TRIANGLE_FAN);
@@ -283,11 +286,98 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 // gl.glVertex3f(x2,1.0f,y2);
 // gl.glVertex3f(x2,-1.0f,y2);//kolejne punkty
 //}
- gl.glEnd();       // Flush all drawing operations to the graphics card
-        gl.glFlush();
+// gl.glEnd();       // Flush all drawing operations to the graphics card
+      //  gl.glFlush();
        
+  //drzewko      
+     
     }
+    
+    void drzewko(GL gl){
+           gl.glColor3f(0.0f,1.0f,0.0f);
+        stozek(gl);
+        
+          gl.glScalef(1.2f, 1.2f, 1.0f);
+        gl.glTranslatef(0.0f,0.0f,1.0f);
+        stozek(gl);
+        
+          gl.glScalef(1.4f, 1.4f, 1.0f);
+         gl.glTranslatef(0.0f,0.0f,1.0f);
+        stozek(gl);
+        
+        gl.glColor3f(0.0f,0.0f,0.0f);
+          gl.glScalef(0.7f, 0.7f, 1.0f);
+         gl.glTranslatef(0.0f,0.0f,1.0f);
+        walec(gl);
+    }
+    
+    void walec(GL gl)
+ {
+//wywo³ujemy automatyczne normalizowanie normalnych
+//bo operacja skalowania je zniekszta³ci
+gl.glEnable(GL.GL_NORMALIZE);
+float x,y,kat;
+gl.glBegin(GL.GL_QUAD_STRIP);
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),0.0f);
+gl.glVertex3f(x, y, -1.0f);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+gl.glNormal3f(0.0f,0.0f,-1.0f);
+x=y=kat=0.0f;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, -1.0f); //srodek kola
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, y, -1.0f);
+}
+gl.glEnd();
+gl.glNormal3f(0.0f,0.0f,1.0f);
+x=y=kat=0.0f;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
+for(kat = 2.0f*(float)Math.PI; kat > 0.0f ; kat -= (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+}
 
+void stozek(GL gl)
+{
+//wywo³ujemy automatyczne normalizowanie normalnych
+gl.glEnable(GL.GL_NORMALIZE);
+float x,y,kat;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, -2.0f); //wierzcholek stozka
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = (float)Math.sin(kat);
+y = (float)Math.cos(kat);
+gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),-2.0f);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glNormal3f(0.0f,0.0f,1.0f);
+gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
+for(kat = 2.0f*(float)Math.PI; kat > 0.0f; kat -= (Math.PI/32.0f))
+{
+x = (float)Math.sin(kat);
+y = (float)Math.cos(kat);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+
+}
     
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }

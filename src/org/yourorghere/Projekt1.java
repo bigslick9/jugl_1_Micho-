@@ -24,6 +24,8 @@ public class Projekt1 implements GLEventListener {
 //statyczne pola okreœlaj¹ce rotacjê wokó³ osi X i Y
  private static float xrot = 0.0f, yrot = 0.0f;
 
+ static Koparka koparka;
+
    public  static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczaj?ce
    public     static float diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
    public      static float specular[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
@@ -33,13 +35,14 @@ public class Projekt1 implements GLEventListener {
    public     static float diffuseLight1[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
    public      static float specular1[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
    public       static float lightPos1[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
+  
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
 
         canvas.addGLEventListener(new Projekt1());
         frame.add(canvas);
-        frame.setSize(640, 480);
+        frame.setSize(1024,768);
         final Animator animator = new Animator(canvas);
         frame.addWindowListener(new WindowAdapter() {
 
@@ -70,7 +73,22 @@ public class Projekt1 implements GLEventListener {
  yrot += 1.0f;
  if(e.getKeyCode() == KeyEvent.VK_LEFT)
  yrot -=1.0f;
- 
+ if(e.getKeyCode() == KeyEvent.VK_1)
+ koparka.kond+=(1.5f);
+ if(e.getKeyCode() == KeyEvent.VK_2)
+ koparka.kond-=(1.5f); 
+  if(e.getKeyCode() == KeyEvent.VK_3)
+ koparka.kond2+=(1.5f);
+ if(e.getKeyCode() == KeyEvent.VK_4)
+ koparka.kond2-=(1.5f);
+  if(e.getKeyCode() == KeyEvent.VK_5)
+ koparka.kond3+=(1.5f);
+ if(e.getKeyCode() == KeyEvent.VK_6)
+ koparka.kond3-=(1.5f); 
+   if(e.getKeyCode() == KeyEvent.VK_7)
+ koparka.kond4+=(0.5f);
+ if(e.getKeyCode() == KeyEvent.VK_8)
+ koparka.kond4-=(0.5f); 
  
  if(e.getKeyChar()=='q'){
      ambientLight= new float[]{ambientLight[0]-0.1f, ambientLight[1]-0.1f,ambientLight[2]-0.1f,ambientLight[3]-0.01f};
@@ -96,6 +114,10 @@ public class Projekt1 implements GLEventListener {
   if(e.getKeyChar()=='l'){
      lightPos= new float[]{lightPos[0]+0.1f, lightPos[1]+0.1f,lightPos[2]+0.1f,lightPos[3]+0.01f};
      }
+  
+  
+  
+  
  }
  public void keyReleased(KeyEvent e){}
  public void keyTyped(KeyEvent e){}
@@ -112,10 +134,10 @@ public class Projekt1 implements GLEventListener {
     public void init(GLAutoDrawable drawable) {
         // Use debug pipeline
         // drawable.setGL(new DebugGL(drawable.getGL()));
-
+        
         GL gl = drawable.getGL();
         System.err.println("INIT GL IS: " + gl.getClass().getName());
-
+       koparka = new Koparka();
         // Enable VSync
         gl.setSwapInterval(1);
 
@@ -164,7 +186,7 @@ public class Projekt1 implements GLEventListener {
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(120.0f, h, 1.0, 40.0);
+        glu.gluPerspective(100.0f, h, 1.0, 40.0);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
         
@@ -261,6 +283,7 @@ gl.glEnd();
     
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
+        
 
         // Clear the drawing area
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -277,23 +300,24 @@ gl.glEnd();
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
         gl.glEnable(GL.GL_LIGHT0); 
-
+//
          gl.glLightfv(GL.GL_LIGHT1,GL.GL_AMBIENT,ambientLight,0); //swiat?o otaczaj?ce
         gl.glLightfv(GL.GL_LIGHT1,GL.GL_DIFFUSE,diffuseLight,0); //?wiat?o rozproszone
         gl.glLightfv(GL.GL_LIGHT1,GL.GL_SPECULAR,specular,0); //?wiat?o odbite
         gl.glLightfv(GL.GL_LIGHT1,GL.GL_POSITION,lightPos,0); //pozycja ?wiat?a
         gl.glEnable(GL.GL_LIGHT1);
-//uaktywnienie ?ród?a ?wiat?a nr. 0
-        gl.glEnable(GL.GL_COLOR_MATERIAL); 
-for(int i=0; i<7; i++){
-    gl.glPushMatrix();
-        for(int k=0; k<7; k++){
-            drzewko(gl);
-            gl.glTranslatef(1.8f,0.0f,0.0f);
-        }
-        gl.glPopMatrix();
-        gl.glTranslatef(0.0f,1.8f,0.0f);
-        }
+////uaktywnienie ?ród?a ?wiat?a nr. 0
+      gl.glEnable(GL.GL_COLOR_MATERIAL); 
+      koparka.Rysuj(gl);
+//for(int i=0; i<7; i++){
+//    gl.glPushMatrix();
+//        for(int k=0; k<7; k++){
+//            drzewko(gl);
+//            gl.glTranslatef(1.8f,0.0f,0.0f);
+//        }
+//        gl.glPopMatrix();
+//        gl.glTranslatef(0.0f,1.8f,0.0f);
+//        }
     }
 //gl.glBegin(GL.GL_QUADS);
 ////œciana przednia

@@ -43,7 +43,9 @@ public class Projekt1 implements GLEventListener {
    public       static float lightPos1[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
   static BufferedImage image1 = null,image2 = null, image3=null;
 static Texture t1 = null, t2 = null, t3=null;
-   
+
+public static float x=0.0f,z=0.0f, kat=0.0f;
+
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
@@ -74,13 +76,13 @@ static Texture t1 = null, t2 = null, t3=null;
  public void keyPressed(KeyEvent e)
  {
  if(e.getKeyCode() == KeyEvent.VK_UP)
- xrot -= 1.0f;
+  przesun(1.0f);
  if(e.getKeyCode() == KeyEvent.VK_DOWN)
- xrot +=1.0f;
+  przesun(-1.0f);
  if(e.getKeyCode() == KeyEvent.VK_RIGHT)
- yrot += 1.0f;
+ kat += 1.0f;
  if(e.getKeyCode() == KeyEvent.VK_LEFT)
- yrot -=1.0f;
+ kat -=1.0f;
  if(e.getKeyCode() == KeyEvent.VK_1)
  koparka.kond+=(1.5f);
  if(e.getKeyCode() == KeyEvent.VK_2)
@@ -221,7 +223,7 @@ gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(90.0f, h, 1.0, 300.0);
+        glu.gluPerspective(98.0f, h, 1.0, 300.0);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
         
@@ -318,6 +320,12 @@ gl.glEnd();
 
 }
 
+public static void przesun(float d){
+x-=d*Math.sin(kat*(3.14f/180.0f));
+z+=d*Math.cos(kat*(3.14f/180.0f));
+ 
+}
+
 void Rysuj(GL gl, Texture t1, Texture t2, Texture t3)
   {    
       gl.glColor3f(1.0f,1.0f,1.0f);
@@ -385,10 +393,10 @@ gl.glEnd();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
-        gl.glTranslatef(0.0f, 0.0f, -6.0f); //przesuniêcie o 6 jednostek
- gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); //rotacja wokó³ osi X
- gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); //rotacja wokó³ osi Y
- 
+        
+ gl.glRotatef(1.0f, 1.0f, 0.0f, 0.0f); //rotacja wokó³ osi X
+ gl.glRotatef(kat, 0.0f, 1.0f, 0.0f); //rotacja wokó³ osi Y
+ gl.glTranslatef(x, 80.0f, z); //przesuniêcie o 6 jednostek
   gl.glEnable(GL.GL_LIGHTING); //uaktywnienie o?wietlenia
         //ustawienie parametrów ?ród?a ?wiat?a nr. 0
         gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat?o otaczaj?ce
@@ -406,7 +414,7 @@ gl.glEnd();
       gl.glEnable(GL.GL_COLOR_MATERIAL); 
     
         Rysuj(gl,t1,t2,t3);
-      
+       
       //koparka.Rysuj(gl);
 //for(int i=0; i<7; i++){
 //    gl.glPushMatrix();

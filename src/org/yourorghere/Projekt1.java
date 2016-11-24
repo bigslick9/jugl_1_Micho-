@@ -414,8 +414,8 @@ gl.glEnd();
       gl.glEnable(GL.GL_COLOR_MATERIAL); 
     
         Rysuj(gl,t1,t2,t3);
-       
-      //koparka.Rysuj(gl);
+       gl.glTranslatef(0.0f,-81.0f,1.0f);
+        koparka.Rysuj(gl);
 //for(int i=0; i<7; i++){
 //    gl.glPushMatrix();
 //        for(int k=0; k<7; k++){

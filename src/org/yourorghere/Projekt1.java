@@ -41,8 +41,8 @@ public class Projekt1 implements GLEventListener {
    public     static float diffuseLight1[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
    public      static float specular1[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
    public       static float lightPos1[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
-  static BufferedImage image1 = null,image2 = null;
-static Texture t1 = null, t2 = null;
+  static BufferedImage image1 = null,image2 = null, image3=null;
+static Texture t1 = null, t2 = null, t3=null;
    
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
@@ -184,8 +184,9 @@ static Texture t1 = null, t2 = null;
         
         try
 {
-image1 = ImageIO.read(getClass().getResourceAsStream("/pokemon.jpg"));
-image2 = ImageIO.read(getClass().getResourceAsStream("/android.jpg"));
+image1 = ImageIO.read(getClass().getResourceAsStream("/bok.jpg"));
+image2 = ImageIO.read(getClass().getResourceAsStream("/trawa.jpg"));
+image3 = ImageIO.read(getClass().getResourceAsStream("/niebo.jpg"));
 }
 catch(Exception exc)
 {
@@ -195,6 +196,7 @@ return;
 
 t1 = TextureIO.newTexture(image1, false);
 t2 = TextureIO.newTexture(image2, false);
+t3 = TextureIO.newTexture(image3, false);
 gl.glTexEnvi(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE,
  GL.GL_BLEND | GL.GL_MODULATE);
 gl.glEnable(GL.GL_TEXTURE_2D);
@@ -219,7 +221,7 @@ gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(100.0f, h, 1.0, 40.0);
+        glu.gluPerspective(90.0f, h, 1.0, 300.0);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
         
@@ -312,8 +314,69 @@ gl.glVertex3f(x, y, 0.0f);
 }
 gl.glEnd();
 
+
+
 }
-    
+
+void Rysuj(GL gl, Texture t1, Texture t2, Texture t3)
+  {    
+      gl.glColor3f(1.0f,1.0f,1.0f);
+//za³adowanie tekstury wczytanej wczeœniej z pliku krajobraz.bmp
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+gl.glBegin(GL.GL_QUADS);
+//œciana przednia
+gl.glNormal3f(0.0f,0.0f,-1.0f);
+gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(-100.0f,100.0f,100.0f);
+gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(100.0f,100.0f,100.0f);
+gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(100.0f,-100.0f,100.0f);
+gl.glTexCoord2f(1.0f, 1.0f);gl.glVertex3f(-100.0f,-100.0f,100.0f);
+//œciana tylnia
+gl.glNormal3f(0.0f,0.0f,1.0f);
+gl.glTexCoord2f(1.0f, 1.0f);gl.glVertex3f(-100.0f,-100.0f,-100.0f);
+gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(100.0f,-100.0f,-100.0f);
+gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(100.0f,100.0f,-100.0f);
+gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(-100.0f,100.0f,-100.0f);
+//œciana lewa
+gl.glNormal3f(1.0f,0.0f,0.0f);
+gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(-100.0f,100.0f,-100.0f);
+gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(-100.0f,100.0f,100.0f);
+gl.glTexCoord2f(1.0f, 1.0f);gl.glVertex3f(-100.0f,-100.0f,100.0f);
+gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(-100.0f,-100.0f,-100.0f);
+//œciana prawa
+gl.glNormal3f(-1.0f,0.0f,0.0f);
+gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(100.0f,-100.0f,-100.0f);
+gl.glTexCoord2f(1.0f, 1.0f);gl.glVertex3f(100.0f,-100.0f,100.0f);
+gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(100.0f,100.0f,100.0f);
+gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(100.0f,100.0f,-100.0f);
+gl.glEnd();
+
+//œciana dolna
+//za³adowanie tekstury wczytanej wczeœniej z pliku niebo.bmp
+ gl.glBindTexture(GL.GL_TEXTURE_2D, t2.getTextureObject());
+ //ustawienia aby tekstura siê powiela³a
+ gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+ gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+gl.glBegin(GL.GL_QUADS);
+gl.glNormal3f(0.0f,1.0f,0.0f);
+ //koordynaty ustawienia 16 x 16 kwadratów powielonej tekstury na œcianie dolnej
+gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(100.0f,-100.0f,100.0f);
+gl.glTexCoord2f(0.0f, 16.0f);gl.glVertex3f(100.0f,-100.0f,-100.0f);
+gl.glTexCoord2f(16.0f, 16.0f);gl.glVertex3f(-100.0f,-100.0f,-100.0f);
+gl.glTexCoord2f(16.0f, 0.0f);gl.glVertex3f(-100.0f,-100.0f,100.0f);
+gl.glEnd();
+     //œciana gorna
+//za³adowanie tekstury wczytanej wczeœniej z pliku trawa.bmp
+gl.glBindTexture(GL.GL_TEXTURE_2D, t3.getTextureObject());
+gl.glBegin(GL.GL_QUADS);
+gl.glNormal3f(0.0f,-1.0f,0.0f);
+gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(-100.0f,100.0f,100.0f);
+gl.glTexCoord2f(1.0f, 1.0f);gl.glVertex3f(-100.0f,100.0f,-100.0f);
+gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(100.0f,100.0f,-100.0f);
+gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(100.0f,100.0f,100.0f);
+gl.glEnd(); 
+gl.glEnd();
+    }
+
     public void display(GLAutoDrawable drawable) {
         GL gl = drawable.getGL();
         
@@ -341,6 +404,8 @@ gl.glEnd();
         gl.glEnable(GL.GL_LIGHT1);
 ////uaktywnienie ?ród?a ?wiat?a nr. 0
       gl.glEnable(GL.GL_COLOR_MATERIAL); 
+    
+        Rysuj(gl,t1,t2,t3);
       
       //koparka.Rysuj(gl);
 //for(int i=0; i<7; i++){
@@ -352,47 +417,48 @@ gl.glEnd();
 //        gl.glPopMatrix();
 //        gl.glTranslatef(0.0f,1.8f,0.0f);
 //        }
-    gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
-gl.glBegin(GL.GL_QUADS);
-//œciana przednia
-
-gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,1.0f);
-gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,1.0f);
-//sciana tylnia
-
-gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,-1.0f);
-gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,-1.0f);
-gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,-1.0f);
-gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-//œciana lewa
-
-gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,-1.0f);
-gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,1.0f);
-gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,-1.0f);
-////œciana prawa
-
-gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,-1.0f);
-gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,1.0f);
-gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,-1.0f);
-////œciana dolna
-
-gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(-1.0f,-1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(1.0f,-1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,-1.0f);
-gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//    gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+//gl.glBegin(GL.GL_QUADS);
+////œciana przednia
 //
-////œciana górna
-
-gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(1.0f,1.0f,1.0f);
-gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(1.0f,1.0f,-1.0f);
-gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(-1.0f,1.0f,-1.0f);
-gl.glEnd();
-    }
+//gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,1.0f);
+//gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,1.0f);
+////sciana tylnia
+//
+//gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,-1.0f);
+//gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,-1.0f);
+//gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+////œciana lewa
+//
+//gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,1.0f);
+//gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(-1.0f,1.0f,-1.0f);
+//////œciana prawa
+//
+//gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,-1.0f);
+//gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(1.0f,1.0f,1.0f);
+//gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//////œciana dolna
+//
+//gl.glTexCoord2f(1.0f, 0.0f); gl.glVertex3f(-1.0f,-1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 0.0f); gl.glVertex3f(1.0f,-1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 1.0f); gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+////
+//////œciana górna
+//
+//gl.glTexCoord2f(1.0f, 1.0f); gl.glVertex3f(-1.0f,1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 1.0f);gl.glVertex3f(1.0f,1.0f,1.0f);
+//gl.glTexCoord2f(0.0f, 0.0f);gl.glVertex3f(1.0f,1.0f,-1.0f);
+//gl.glTexCoord2f(1.0f, 0.0f);gl.glVertex3f(-1.0f,1.0f,-1.0f);
+    } 
+  
+    
 //ostroslup
  
 // gl.glBegin(GL.GL_QUADS);
